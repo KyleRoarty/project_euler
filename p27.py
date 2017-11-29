@@ -10,8 +10,10 @@ start = time.clock()
 max_seq_primes = 0
 prod_coef = 0
 
+b_primes = [b for b in range(0, 1001) if lenFactors(b) == 1]
+
 for a in range(-999, 1000):
-    for b in range(-1000, 1001):
+    for b in b_primes:
         seq_primes = 0
         n = 0
         while True:
