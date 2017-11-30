@@ -18,7 +18,7 @@ for i in range(0, 10):
     fact_list.append(factorial(i))
 
 for i in range(3, 1000000):
-    if sum([fact_list[int(n)] for n in list(str(i))]) == i:
+    if sum([fact_list[int(n)] for n in str(i)]) == i:
         fact_nums += i
 
 print(fact_nums)
