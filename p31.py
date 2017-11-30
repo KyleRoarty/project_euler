@@ -6,7 +6,7 @@ WAYS = []
 goal=200
 valueLUT = [200, 100, 50, 20, 10, 5, 2, 1]
 dict_template = {1:0, 2:0, 5:0, 10:0, 20:0, 50:0, 100:0, 200:0}
-
+COUNT = 0
 
 
 class Tree(object):
@@ -15,6 +15,7 @@ class Tree(object):
         self.total=total
         self.parent=parent
         self.children=children
+        self.count=0
 
     def add_child(self,node):
         assert isinstance(node, Tree)
@@ -28,8 +29,7 @@ def getCombination(node):
         new_dict[search_node.value] += 1
         search_node = search_node.parent
 
-    if new_dict not in WAYS:
-        WAYS.append(new_dict)
+    search_node.count += 1
 
 def genTree(node, LUT):
     for i in range(0, len(LUT)):
@@ -51,6 +51,6 @@ root = Tree()
 
 genTree(root, valueLUT)
 
-print(len(WAYS))
+print(root.count)
 end = time.clock()
 print(end-start)
