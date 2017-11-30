@@ -52,6 +52,5 @@ root = Tree()
 genTree(root, valueLUT)
 
 print(len(WAYS))
-print(WAYS)
 end = time.clock()
 print(end-start)
