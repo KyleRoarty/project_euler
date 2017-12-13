@@ -1,3 +1,4 @@
+*.swp
 *.txt
 *.pyc
 venv/*
