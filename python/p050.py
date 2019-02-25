@@ -40,7 +40,7 @@ for i in range(len(primes)-1, 1, -1):
             break
 
         if sum_cons in primes:
-            print('Winner: {}, {}, {}\nTime: {}'.format(sum_cons, i, j, (process_time()-start))
+            print('Winner: {}, {}, {}\nTime: {}'.format(sum_cons, i, j, (process_time()-start)))
             quit()
 
         sum_cons -= primes[j]
