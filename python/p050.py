@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from time import process_time
+
 '''
 The prime 41, can be written as the sum of six consecutive primes:
 41 = 2 + 3 + 5 + 7 + 11 + 13
@@ -12,37 +14,21 @@ Which prime, below one-million, can be written as the sum of the most consecutiv
 
 '''
 
-def better_e_sieve(max_n):
+def e_sieve(max_n):
     prime = [True]*max_n
     p = 2
-    ret_l = []
 
     while p*p <= max_n:
         if prime[p]:
-            for i in range(p*2, max_n, p):
-                prime[i] = False
-
+            prime[2*p::p] = [False]*len(prime[2*p::p])
         p += 1
 
-    for p in range(2, max_n):
-        if prime[p]:
-            ret_l.append(p)
-
-    return ret_l
-
-def e_sieve(max_n):
-    to_sieve = list(range(2, max_n))
-    primes = []
-
-    while to_sieve:
-        primes.append(to_sieve[0])
-        to_sieve = list(filter(lambda x: x % to_sieve[0], to_sieve))
-
-    return primes
+    return [n for n in range(2, max_n) if prime[n]]
 
 MAX_N = 1000000
 
-primes = better_e_sieve(MAX_N)
+start = process_time()
+primes = e_sieve(MAX_N)
 
 for i in range(len(primes)-1, 1, -1):
     j = 0
@@ -54,7 +40,7 @@ for i in range(len(primes)-1, 1, -1):
             break
 
         if sum_cons in primes:
-            print('Winner: {}, {}, {}'.format(sum_cons, i, j))
+            print('Winner: {}, {}, {}\nTime: {}'.format(sum_cons, i, j, (process_time()-start))
             quit()
 
         sum_cons -= primes[j]
