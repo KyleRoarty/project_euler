@@ -1,47 +1,24 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-import time
+from time import process_time
+from itertools import permutations
+from functools import reduce
 
-IN_ORDER = [[], ['1'], ['1', '2'], ['1', '2', '3'], ['1', '2', '3', '4'], ['1', '2', '3', '4', '5'],
-            ['1', '2', '3', '4', '5', '6'], ['1', '2', '3', '4', '5', '6', '7'], ['1', '2', '3', '4', '5', '6', '7', '8'],
-            ['1', '2', '3', '4', '5', '6', '7', '8', '9']]
+IN_ORDER = [[1], [1, 2], [1, 2, 3], [1, 2, 3, 4], [1, 2, 3, 4, 5],
+            [1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6, 7], [1, 2, 3, 4, 5, 6, 7, 8],
+            [1, 2, 3, 4, 5, 6, 7, 8, 9]]
 
-def partialSieve(start, end, primes):
-    skip = [0]*(end-start)
+IN_ORDER.reverse()
 
-    for prime in primes:
-        x = start + prime % start
-        while x < start + len(skip):
-            skip[x-start] = 1
-            x += prime
+def isPrime(num):
+    return num > 1 and all(num % n for n in range(2, int(num**0.5)+1))
 
-    for i in range(0, len(skip)):
-        if skip[i]:
-            continue
-
-        primes.append(i+start)
-
-        j = (i+start)*(i+start)
-        while j < start + len(skip):
-            skip[j-start] = 1
-            j += (i+start)
-
-    return primes
-
-
-start = time.clock()
-
-primes = []
-for i in range(2, 1000000000, 100000000):
-    primes = partialSieve(i, i+100000000, primes)
-
-for p in reversed(primes):
-    sort_p = sorted(str(p))
-    if sort_p == IN_ORDER[len(sort_p)]:
-        print(p)
-        break
-
-
-end = time.clock()
-print(end-start)
-
+start = process_time()
+for order in IN_ORDER:
+    all_perms = list(permutations(order))
+    all_perms.reverse()
+    num_perms = [reduce(lambda x,y: 10*x+y, perm) for perm in all_perms]
+    for perm in num_perms:
+        if isPrime(perm):
+            print('Perm: {}, time: {}'.format(perm, process_time()-start))
+            quit()
