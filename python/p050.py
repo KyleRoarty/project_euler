@@ -29,19 +29,34 @@ MAX_N = 1000000
 
 start = process_time()
 primes = e_sieve(MAX_N)
+print('Prime sieve time: {}'.format(process_time()-start))
 
-for i in range(len(primes)-1, 1, -1):
-    j = 0
-    sum_cons = sum(primes[0:i-1])
-    while j + i < len(primes):
-        sum_cons += primes[i+j-1]
+start = process_time()
+global_max = 0
+global_num = 0
+# Start from smallest prime to largest prime
+for i in range(0, len(primes)):
+    # Check if max number of primes we can add is less than the largest
+    # we already added together
+    if len(primes)-i < global_max:
+        break
 
+    # Know it has to be at least global_max in length, so sum global_max terms
+    # initially
+    sum_cons = sum(primes[i:i+global_max])
+
+    for j in range(global_max, len(primes)-i):
+        # Add next consecutive term
+        sum_cons += primes[i+j]
+
+        # Bigger than largest prime, bad. Computing after this is wasteful
         if sum_cons > primes[len(primes)-1]:
             break
 
+        # If we hit a prime, we know it's a larger sequential sum
+        # Due to the initial sum out of the loop
         if sum_cons in primes:
-            print('Winner: {}, {}, {}\nTime: {}'.format(sum_cons, i, j, (process_time()-start)))
-            quit()
+            global_max = j+1
+            global_num = sum_cons
 
-        sum_cons -= primes[j]
-        j += 1
+print('Winner: {}, {}\nProcessing time: {}'.format(global_num, global_max, process_time()-start))
