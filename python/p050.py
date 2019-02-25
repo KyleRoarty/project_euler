@@ -14,22 +14,19 @@ Which prime, below one-million, can be written as the sum of the most consecutiv
 
 '''
 
-def e_sieve(max_n):
-    prime = [True]*max_n
-    p = 2
+def sieve1(max_n):
+    prime = [True] * (max_n//2)
+    for i in range(3, int(max_n**0.5)+1, 2):
+        if prime[i//2]:
+            prime[i*i//2::i] = [False] * ((max_n-i*i-1)//(2*i)+1)
 
-    while p*p <= max_n:
-        if prime[p]:
-            prime[2*p::p] = [False]*len(prime[2*p::p])
-        p += 1
-
-    return [n for n in range(2, max_n) if prime[n]]
+    return [2] + [2*i+1 for i in range(1, max_n//2) if prime[i]]
 
 MAX_N = 1000000
 
 start = process_time()
-primes = e_sieve(MAX_N)
-print('Prime sieve time: {}'.format(process_time()-start))
+primes = sieve1(MAX_N)
+print('Sieve time: {}'.format(process_time()-start))
 
 start = process_time()
 global_max = 0
