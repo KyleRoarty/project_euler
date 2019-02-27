@@ -1,17 +1,27 @@
-nums = [11,12,13,14,15,16,17,18,19,20]
-x = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-primes = [1][2][3][2,2][5][2,3][7][2,2,2][3,3][5,2][11][3,2,2]
-         [13][7,2][5,3][2,2,2,2][17][3,3,2][19][5,2,2]
-         2*2*2*2*19*17*13*11*7*5*3*3
-check = False
-num = 2520
+#!/usr/bin/env python3
 
-while not check:
-    num += 2
-    for index in range(0,len(nums)):
-        if num % nums[index] != 0:
-            break
-        if index == len(nums)-1:
-            check = True
+from euler import *
+from time import process_time
 
-print num
+from functools import reduce
+
+'''
+2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
+
+What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+'''
+
+start = process_time()
+
+MAX_N = 20
+primes = sieve1(MAX_N)
+factors = []
+
+for prime in primes:
+    factor = prime
+    while factor*prime <= MAX_N:
+        factor *= prime
+    factors.append(factor)
+
+ans = reduce(lambda x,y: x*y, factors)
+print('Winner: {}\nTime: {}'.format(ans, process_time()-start))
