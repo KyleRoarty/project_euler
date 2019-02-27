@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from euler import *
 from math import sqrt
 
 '''
@@ -17,15 +18,12 @@ It turns out that the conjecture was false.
 What is the smallest odd composite that cannot be written as the sum of a prime and twice a square?
 '''
 
-def isPrime(n, primes):
-    return n > 1 and all(n%i for i in primes)
-
 i = 1
 p_list = []
 while True:
     i += 2
 
-    if isPrime(i, p_list):
+    if is_prime(i, p_list):
         p_list.append(i)
         continue
 

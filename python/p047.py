@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from euler import *
 from math import sqrt
 from functools import reduce
 
@@ -17,9 +18,6 @@ The first three consecutive numbers to have three distinct prime factors are:
 
 Find the first four consecutive integers to have four distinct prime factors each. What is the first of these numbers?
 '''
-
-def is_prime(n, primes):
-    return n > 1 and all(n%i for i in primes)
 
 # completely factors out d from n, returning -1 if not divisible
 def factor_out(n, d):
