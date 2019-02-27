@@ -1,52 +1,33 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-import time
+from euler import *
+from time import process_time
 
+'''
+The number, 197, is called a circular prime because all rotations of the digits: 197, 971, and 719, are themselves prime.
 
-goal = 1000000
-def anyFactors(n):
-    return len([div for i in range(1, int(n**.5+1)) for div in [i, n//i] if not n % i]) > 2
+There are thirteen such primes below 100: 2, 3, 5, 7, 11, 13, 17, 31, 37, 71, 73, 79, and 97.
 
+How many circular primes are there below one million?
+'''
 
-start = time.clock()
+start = process_time()
 
-primes = []
+primes = sieve1(1000000)
+circ_primes = 0
 
-circ_primes = []
+for prime in primes:
+    str_p = str(prime)
+    rot_p = str_p[1:]+str_p[:1]
+    circ = True
 
-do_these = [1]*goal
-
-for i in range(2, goal):
-    if not do_these[i]:
-        continue
-
-    if anyFactors(i):
-        continue
-
-    cp = True
-    str_i = str(i)
-    teststr = str_i[1:]+str_i[:1]
-    add_list = [i]
-    while teststr != str_i:
-        if anyFactors(int(teststr)):
-            add_list = [i]
-            cp = False
+    while rot_p != str_p:
+        if not is_prime(int(rot_p)):
+            circ = False
             break
-        add_list.append(int(teststr))
-        teststr = teststr[1:]+teststr[:1]
+        rot_p = rot_p[1:]+rot_p[:1]
 
-    if cp:
-        circ_primes.extend(add_list)
-        for x in add_list:
-            do_these[x] = 0
+    if circ:
+        circ_primes += 1
 
-    for val in add_list:
-        tmp = val*val
-        while val < goal:
-            do_these[val] = 0
-            val += val
-
-print(len(circ_primes))
-end = time.clock()
-print(end-start)
-
+print('Winner: {}\nTime: {}'.format(circ_primes, process_time()-start))
