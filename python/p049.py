@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from euler import *
+
 '''
 The arithmetic sequence, 1487, 4817, 8147, in which each of the terms increases
 by 3330, is unusual in two ways:
@@ -14,18 +16,8 @@ What 12-digit number do you form by concatenating the three terms in this sequen
 '''
 
 
-def e_sieve(max_n):
-    to_sieve = list(range(2, max_n+1))
-    primes = []
-
-    while to_sieve:
-        primes.append(to_sieve[0])
-        to_sieve = list(filter(lambda x: x % to_sieve[0], to_sieve))
-
-    return primes
-
 # Get primes up to 9999
-primes = e_sieve(9999)
+primes = sieve1(9999)
 # Filter out < 4-digit numbers
 primes = list(filter(lambda x: x >= 1000, primes))
 

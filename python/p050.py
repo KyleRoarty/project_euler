@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from euler import *
 from time import process_time
 
 '''
@@ -13,14 +14,6 @@ The longest sum of consecutive primes below one-thousand that adds to a prime, c
 Which prime, below one-million, can be written as the sum of the most consecutive primes?
 
 '''
-
-def sieve1(max_n):
-    prime = [True] * (max_n//2)
-    for i in range(3, int(max_n**0.5)+1, 2):
-        if prime[i//2]:
-            prime[i*i//2::i] = [False] * ((max_n-i*i-1)//(2*i)+1)
-
-    return [2] + [2*i+1 for i in range(1, max_n//2) if prime[i]]
 
 MAX_N = 1000000
 
